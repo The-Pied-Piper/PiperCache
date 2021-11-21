@@ -1,6 +1,8 @@
 """Contains tests for the Cache class."""
-from uuid import uuid4
+from unittest.mock import MagicMock
+
 from cache.cache import Cache
+from cache.store import Store
 
 
 class TestPut:
@@ -8,17 +10,39 @@ class TestPut:
 
     def test_add_first_data(self):
         """Test adding data when the store is empty."""
-        cache = Cache(10)
-        key = str(uuid4())
-        value = uuid4().hex
+        store = Store(10)
+        cache = Cache(store)
+        key = "key1"
+        value = "value1"
         cache.put(key, value)
-        assert cache._store[key] == value # pylint: disable=protected-access
+        assert store[key] == value
 
     def test_add_data(self):
-        """test adding data when the store is not empty."""
-        cache = Cache(10)
-        cache.put(str(uuid4()), str(uuid4()))
-        key = str(uuid4())
-        value = uuid4().hex
+        """Test adding data when the store is not empty."""
+        store = Store(10)
+        store["key1"] = "value1"
+        cache = Cache(store)
+        key = "key2"
+        value = "value2"
         cache.put(key, value)
-        assert cache._store[key] == value # pylint: disable=protected-access
+        assert store[key] == value
+
+    def test_update_data(self):
+        """Test updating a value for an existing key."""
+        store = Store(10)
+        key = "key1"
+        store[key] = "value1"
+        cache = Cache(store)
+        value = "value2"
+        cache.put(key, value)
+        assert store[key] == value
+
+    def test_put_hook_called(self):
+        """Test that the put hook is called correctly."""
+        store = Store(10)
+        key = "key1"
+        value = "value1"
+        cache = Cache(store)
+        cache.put_hook = MagicMock(return_value = (key, value))
+        cache.put(key, value)
+        cache.put_hook.assert_called_once_with(key, value)
