@@ -1,6 +1,5 @@
 """This module contains the various cache implementations."""
-from typing import Optional
-from cache.store import Store
+from cache.store import Store, LRUStore
 
 
 class Cache:
@@ -31,6 +30,16 @@ class Cache:
         """Delete the data for the given key from the store."""
         self._store.pop(key, None)
 
+class LRUCache(Cache):
+    """A simple LRU cache."""
+
+    def __init__(self, size):
+        super().__init__(LRUStore(size))
+        self._size = size
+
+    def reset(self):
+        """Reset the store."""
+        self.__init__(LRUStore(self._size))
+
 # TODO
 #     - handle error if key is not found in get method.
-#     - handle error if key is not fount in del method.
