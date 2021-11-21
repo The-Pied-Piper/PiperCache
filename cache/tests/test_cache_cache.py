@@ -6,7 +6,7 @@ from cache.store import Store
 
 
 class TestPut:
-    """Test cases for the put function."""
+    """Test cases for the `put` function."""
 
     def test_add_first_data(self):
         """Test adding data when the store is empty."""
@@ -46,3 +46,27 @@ class TestPut:
         cache.put_hook = MagicMock(return_value = (key, value))
         cache.put(key, value)
         cache.put_hook.assert_called_once_with(key, value)
+
+
+class TestGet:
+    """Test the `get` function."""
+
+    def test_get(self):
+        """Test getting cached data."""
+        store = Store(10)
+        key = "key1"
+        value = "value1"
+        store[key] = value
+        cache = Cache(store)
+        assert cache.get(key) == value
+
+    def test_get_hook_called(self):
+        """Test getting cached data."""
+        store = Store(10)
+        key = "key1"
+        value = "value1"
+        store[key] = value
+        cache = Cache(store)
+        cache.get_hook = MagicMock(return_value = (key, value))
+        cache.get(key)
+        cache.get_hook.assert_called_once_with(key, value)
