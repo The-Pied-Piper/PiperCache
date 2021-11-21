@@ -9,7 +9,7 @@ class Store(OrderedDict):
         self.size = size
         super().__init__(*args, **kwargs)
 
-    def get_overflow(self):
+    def get_overflow(self, _key, _value):
         """Get the key of the item to remove if there are too many items."""
         return next(iter(self))
 
@@ -25,6 +25,9 @@ class Store(OrderedDict):
         """Run this hook before fetching an item from the store."""
         return value
 
+    def get(self, key, default=None):
+        return self.get_hook(key, super().get(key, default))
+
     def __getitem__(self, key):
         return self.get_hook(key, super().__getitem__(key))
 
@@ -33,7 +36,7 @@ class Store(OrderedDict):
             key, value = self.update_hook(key, value)
         else:
             if len(self) == self.size:
-                del self[self.get_overflow()]
+                del self[self.get_overflow(key, value)]
             key, value = self.add_new_hook(key, value)
         super().__setitem__(key, value)
 
