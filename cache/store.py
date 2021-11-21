@@ -36,3 +36,17 @@ class Store(OrderedDict):
                 del self[self.get_overflow()]
             key, value = self.add_new_hook(key, value)
         super().__setitem__(key, value)
+
+
+class LRUStore(Store):
+    """A low level LRU cache."""
+
+    def update_hook(self, key, value):
+        """Run this hook before updating an existing store item."""
+        self.move_to_end(key)
+        return key, value
+
+    def get_hook(self, key, value):
+        """Run this hook before fetching an item from the store."""
+        self.move_to_end(key)
+        return value
