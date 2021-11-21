@@ -1,5 +1,6 @@
 # editor
 .vscode
+.devcontainer
 
 # python
 *.pyc
