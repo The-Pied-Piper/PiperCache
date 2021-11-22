@@ -70,3 +70,45 @@ class TestGet:
         cache.get_hook = MagicMock(return_value = (key, value))
         cache.get(key)
         cache.get_hook.assert_called_once_with(key, value)
+
+class TestDelete:
+    """Tests for the delete function."""
+
+    def test_removes_item(self):
+        """test that the item is removed."""
+        store = Store(10)
+        key1 = "key1"
+        key2 = "key2"
+        value1 = "value1"
+        value2 = "value2"
+        store[key1] = value1
+        store[key2] = value2
+        cache = Cache(store)
+        cache.delete(key1)
+        assert key1 not in store
+
+    def test_remove_last_item(self):
+        """test removing the last item."""
+        store = Store(10)
+        key1 = "key1"
+        value1 = "value1"
+        store[key1] = value1
+        cache = Cache(store)
+        cache.delete(key1)
+        assert key1 not in store
+
+    def test_remove_not_in_store(self):
+        """test removing the last item."""
+        store = Store(10)
+        key1 = "key1"
+        key2 = "key2"
+        key3 = "key3"
+        value1 = "value1"
+        value2 = "value2"
+        store[key1] = value1
+        store[key2] = value2
+        cache = Cache(store)
+        cache.delete(key3)
+        assert key1 in store
+        assert key2 in store
+        assert key3 not in store
