@@ -15,6 +15,7 @@ pipenv install --dev
 ```
 
 ## Usage
+To use the build in caches:
 ```python3
 from cache.cache import LRUCache
 
@@ -29,3 +30,21 @@ lry_cache.get("key2")  # Exception
 lru_cache.reset()
 lru_cache.get("key1")  # Exception
 ```
+
+**Or** construct your own:
+```python3
+from cache.store import Store
+from cache.cache import Cache
+
+class MyStore(Store):
+    """Build yourt own store here."""
+
+class MyCache(Cache)
+    """code for your cache here"""
+
+    def __init__(self):
+        store = MyStore()
+        super().__init__(store)
+```
+
+**Or** mix and match build in stores and caches.
