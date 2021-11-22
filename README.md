@@ -37,14 +37,17 @@ from cache.store import Store
 from cache.cache import Cache
 
 class MyStore(Store):
-    """Build yourt own store here."""
+    """My class to extend store logic."""
+    # ...
 
 class MyCache(Cache)
-    """code for your cache here"""
+    """My class to extend the Cache API."""
 
     def __init__(self):
         store = MyStore()
         super().__init__(store)
+
+    # ...
 ```
 
 **Or** mix and match build in stores and caches.
