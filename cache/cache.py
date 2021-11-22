@@ -1,5 +1,7 @@
 """This module contains the various cache implementations."""
+from cache.exceptions import CacheKeyException
 from cache.store import Store, LRUStore
+
 
 
 class Cache:
@@ -23,7 +25,12 @@ class Cache:
 
     def get(self, key):
         """Fetch the value for the given key from the store."""
-        _, value = self.get_hook(key, self._store[key])
+        try:
+            value = self._store[key]
+        except KeyError as err:
+            raise CacheKeyException("Could not find key in the cache") from err
+
+        _, value = self.get_hook(key, value)
         return value
 
     def delete(self, key):
@@ -41,6 +48,3 @@ class LRUCache(Cache):
     def reset(self):
         """Reset the store."""
         self.__init__(LRUStore(self._size))
-
-# TODO
-#     - handle error if key is not found in get method.
