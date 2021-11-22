@@ -30,6 +30,7 @@ class Cache:
         """Delete the data for the given key from the store."""
         self._store.pop(key, None)
 
+
 class LRUCache(Cache):
     """A simple LRU cache."""
 
