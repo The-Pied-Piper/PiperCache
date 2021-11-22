@@ -1,7 +1,9 @@
 """Contains tests for the Cache class."""
 from unittest.mock import MagicMock
+import pytest
 
 from cache.cache import Cache
+from cache.exceptions import CacheKeyException
 from cache.store import Store
 
 
@@ -70,6 +72,21 @@ class TestGet:
         cache.get_hook = MagicMock(return_value = (key, value))
         cache.get(key)
         cache.get_hook.assert_called_once_with(key, value)
+
+    def test_exception_on_not_found(self):
+        """Test that an exception is raised if the key is not found."""
+        store = Store(10)
+        key1 = "key1"
+        key2 = "key2"
+        key3 = "key3"
+        value1 = "value1"
+        value2 = "value2"
+        store[key1] = value1
+        store[key2] = value2
+        cache = Cache(store)
+        with pytest.raises(CacheKeyException):
+            cache.get(key3)
+
 
 class TestDelete:
     """Tests for the delete function."""
