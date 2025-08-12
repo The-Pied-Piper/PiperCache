@@ -6,8 +6,10 @@ verify_ssl = true
 [dev-packages]
 pylint = "*"
 pytest = "*"
+black = "*"
+mypy = "*"
 
 [packages]
 
 [requires]
-python_version = "3.8"
+python_version = "3.12"
