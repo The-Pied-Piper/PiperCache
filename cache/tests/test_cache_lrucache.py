@@ -1,5 +1,7 @@
 """Contains tests for the LRUCache class."""
+
 from cache.cache import LRUCache
+
 
 class TestReset:
     """Tests for the `reset` function."""
@@ -13,9 +15,9 @@ class TestReset:
         value2 = "value2"
         cache.put(key1, value1)
         cache.put(key2, value2)
-        assert len(cache._store) == 2 # pylint: disable=protected-access
+        assert len(cache._store) == 2  # pylint: disable=protected-access
         cache.reset()
-        assert len(cache._store) == 0 # pylint: disable=protected-access
+        assert len(cache._store) == 0  # pylint: disable=protected-access
 
     def test_add_after_reset(self):
         """tests adding data after reset."""
@@ -26,9 +28,9 @@ class TestReset:
         value2 = "value2"
         cache.put(key1, value1)
         cache.put(key2, value2)
-        assert len(cache._store) == 2 # pylint: disable=protected-access
+        assert len(cache._store) == 2  # pylint: disable=protected-access
         cache.reset()
-        assert len(cache._store) == 0 # pylint: disable=protected-access
+        assert len(cache._store) == 0  # pylint: disable=protected-access
         cache.put(key1, value1)
         cache.put(key2, value2)
-        assert len(cache._store) == 2 # pylint: disable=protected-access
+        assert len(cache._store) == 2  # pylint: disable=protected-access

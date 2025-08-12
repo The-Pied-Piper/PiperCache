@@ -1,7 +1,9 @@
 """Setup script for the library."""
-from distutils.core import setup
 
-setup(name="Cache",
+from setuptools import setup
+
+setup(
+    name="Cache",
     version="1.0",
     description="A library for building caches in python.",
     author="Umar Khan",

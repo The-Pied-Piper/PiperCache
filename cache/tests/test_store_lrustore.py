@@ -1,13 +1,14 @@
 """Contains tests for the LRUStore class."""
+
 from cache.store import LRUStore
 
 
 class TestUpdateHook:
     """Tests  for the `update_hook` function."""
 
-    def test_element_moved_to_end(self):
+    def test_element_moved_to_end(self) -> None:
         """test that the update_hook moves an element moves it to the end."""
-        store = LRUStore(10)
+        store = LRUStore[str](10)
         key1 = "key1"
         key2 = "key2"
         key3 = "key3"
@@ -22,9 +23,9 @@ class TestUpdateHook:
         assert list(store.keys())[-1] == key1
         assert list(store.keys())[0] == key2
 
-    def test_return(self):
+    def test_return(self) -> None:
         """test that the update_hook returns (key, value)."""
-        store = LRUStore(10)
+        store = LRUStore[str](10)
         key1 = "key1"
         value1 = "value1"
         value2 = "value2"
@@ -36,9 +37,9 @@ class TestUpdateHook:
 class TestGetHook:
     """Tests  for the `get_hook` function."""
 
-    def test_element_moved_to_end(self):
+    def test_element_moved_to_end(self) -> None:
         """test that the get_hook moves an element moves it to the end."""
-        store = LRUStore(10)
+        store = LRUStore[str](10)
         key1 = "key1"
         key2 = "key2"
         key3 = "key3"
@@ -52,9 +53,9 @@ class TestGetHook:
         assert list(store.keys())[-1] == key1
         assert list(store.keys())[0] == key2
 
-    def test_return(self):
+    def test_return(self) -> None:
         """test that the get_hook returns the value argument."""
-        store = LRUStore(10)
+        store = LRUStore[str](10)
         key1 = "key1"
         value1 = "value1"
         value2 = "value2"
