@@ -1,5 +1,4 @@
 from cache.store import LRUStore
-import pytest
 
 
 def test_lrustore_basic_operations() -> None:

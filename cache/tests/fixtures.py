@@ -1,5 +1,5 @@
 import pytest
-from typing import TypeVar, Protocol, Any, Type
+from typing import TypeVar, Protocol, Any
 from cache.store import Store
 
 

@@ -1,5 +1,4 @@
 import pytest
-from cache.store import Store
 from cache.tests.fixtures import store_factory, StoreFactoryProtocol
 
 
